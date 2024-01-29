@@ -1,0 +1,14 @@
+Timer
+VisibleOnScreenNotifier2D
+AnimatedSprite2D
+CharacterBody2D
+CollisionShape2D
+Area2D
+MarginContainer
+Label
+CheckButton
+Button
+Sprite2D
+ParallaxLayer
+ParallaxBackground
+AudioStreamPlayer

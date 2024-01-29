@@ -1,0 +1,10 @@
+res://Game/game.tscn
+res://PlaneCB/plane_cb.tscn
+res://Laser/laser.tscn
+res://Pipe/pipe.tscn
+res://Pipes/pipes.tscn
+res://Main/Main.tscn
+res://GameOver/game_over.tscn
+res://Hud/hud.tscn
+res://PlaneEnemy/plane_enemy.tscn
+res://PlaneEnemyBack/plane_enemy_back.tscn

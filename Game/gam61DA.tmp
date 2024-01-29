@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://dgjuo6sxsik1m"]
+
+[ext_resource type="Script" path="res://Game/game.gd" id="1_6bc6e"]
+[ext_resource type="Texture2D" uid="uid://vroac10hqjms" path="res://assets/background/rocks_2.png" id="1_unmps"]
+[ext_resource type="PackedScene" uid="uid://crherltrao7lq" path="res://PlaneCB/plane_cb.tscn" id="2_qp8bd"]
+[ext_resource type="PackedScene" uid="uid://bvxi8a3fpofx0" path="res://ScrollingBG/scrolling_bg.tscn" id="3_hxhc2"]
+[ext_resource type="PackedScene" uid="uid://c42ea5q0o5mkk" path="res://Pipes/pipes.tscn" id="3_iuiby"]
+[ext_resource type="PackedScene" uid="uid://chbhvf2ogk5y5" path="res://GameOver/game_over.tscn" id="5_crvpd"]
+[ext_resource type="PackedScene" uid="uid://b67n1qql2lnsp" path="res://Hud/hud.tscn" id="6_46nby"]
+[ext_resource type="AudioStream" uid="uid://bcddeyhw2vi6t" path="res://assets/audio/engine.mp3" id="6_qjbwa"]
+[ext_resource type="AudioStream" uid="uid://b8bygvxgpkqv3" path="res://assets/audio/game_over.wav" id="7_2k61r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_em24d"]
+size = Vector2(507, 20)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_6bc6e")
+pipes_scene = ExtResource("3_iuiby")
+
+[node name="ScrollingBG" parent="." instance=ExtResource("3_hxhc2")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(226, 308)
+texture = ExtResource("1_unmps")
+
+[node name="PlaneCB" parent="." instance=ExtResource("2_qp8bd")]
+position = Vector2(72, 334)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(-1, 848)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(243.5, 19)
+shape = SubResource("RectangleShape2D_em24d")
+
+[node name="PipesHolder" type="Node2D" parent="."]
+
+[node name="SpawnU" type="Marker2D" parent="."]
+position = Vector2(530, 310)
+
+[node name="SpawnL" type="Marker2D" parent="."]
+position = Vector2(530, 570)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("5_crvpd")]
+visible = false
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("6_46nby")]
+
+[node name="EngineSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_qjbwa")
+autoplay = true
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2k61r")
+
+[node name="EnemyTimer" type="Timer" parent="."]
+wait_time = 8.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_enemy_timer_timeout"]

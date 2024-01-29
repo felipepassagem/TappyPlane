@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://cogukeqh777xl"]
+
+[ext_resource type="Texture2D" uid="uid://dq66qxc8m0brr" path="res://assets/plane_enemy/planes_sheet-3.png.png" id="1_qifxg"]
+[ext_resource type="Script" path="res://PlaneEnemyBack/plane_enemy_back.gd" id="1_qon0c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbk5b"]
+atlas = ExtResource("1_qifxg")
+region = Rect2(0, 0, 88, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj0qw"]
+atlas = ExtResource("1_qifxg")
+region = Rect2(88, 0, 88, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1wlr"]
+atlas = ExtResource("1_qifxg")
+region = Rect2(176, 0, 88, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_epg8k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbk5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj0qw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1wlr")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+z_index = -100
+scale = Vector2(0.4, 0.4)
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_qon0c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_epg8k")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 0.0128481
+
+[node name="EnemyBackTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="timeout" from="EnemyBackTimer" to="." method="_on_enemy_back_timer_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
